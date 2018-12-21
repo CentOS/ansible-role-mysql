@@ -1,0 +1,13 @@
+---
+# defaults file for mysql
+mysql_root_pass: changeme123
+
+# defaulting to innodb 
+# Worth noting that innodb_log_file_size is hardcoded to 512M, 
+# as changing that value and restarting mysqld/mariadb doesn't work
+mysql_innodb_host: True
+mysql_innodb_buffer_pool_size: 1024M
+mysql_innodb_log_buffer_size: 32M
+mysql_max_allowed_packet: 64M
+mysql_max_connections: 500
+

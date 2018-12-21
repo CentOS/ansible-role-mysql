@@ -1,0 +1,6 @@
+- name: install the MySQL packages
+  yum: name={{ item }} state=installed
+  with_items: 
+      - "{{ mysql_server_pkg }}"
+      - "{{ mysql_client_pkg }}"
+      - "{{ mysql_python_pkg }}"

@@ -1,0 +1,57 @@
+---
+
+- name: source the distribution specific vars
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- include: "{{ ansible_os_family }}.yml"
+
+- name: Configuring server.cnf [mariadb]
+  template: 
+    src: server.cnf.j2 
+    dest: /etc/my.cnf.d/server.cnf 
+    owner: root 
+    group: root 
+    mode: 644
+  when: ansible_distribution_major_version|int >=7
+  notify: restart_mysqld
+
+- name: make sure the service is started
+  service: 
+    name: "{{ mysql_service_name }}" 
+    state: started 
+    enabled: true
+
+- name: set mysql root password
+  mysql_user: 
+    name: root 
+    host: "{{ item }}" 
+    password: "{{ mysql_root_pass }}"
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: copy a .my.cnf for future operations
+  template: 
+    src: my.cnf.j2 
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0640
+
+- name: Ensuring test database is deleted
+  mysql_db: 
+    name: test 
+    state: absent
+  
+# Backup
+- name: Ensuring backup user and jobs
+  include_role:
+    name: centos-backup
+    tasks_from: client
+
+

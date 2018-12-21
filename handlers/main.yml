@@ -1,0 +1,6 @@
+---
+# handlers file for mysql
+- name: restart_mysqld
+  service:
+    name: "{{ mysql_service_name }}" 
+    state: restarted

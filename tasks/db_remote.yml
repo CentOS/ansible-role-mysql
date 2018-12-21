@@ -1,0 +1,24 @@
+---
+
+- name: create application user "{{ db_user }}"
+  mysql_user: 
+    host: "{{ item }}" 
+    name: "{{ db_user }}" 
+    password: "{{ db_pass }}" 
+    state: present 
+    priv: "{{ db_name}}.*:ALL,GRANT"
+  with_items:
+    - '127.0.0.1'
+    - '::1'
+    - 'localhost'
+    - '%'
+  when: db_user is defined
+  delegate_to: "{{ mysql_host }}"
+
+- name: create application database "{{ db_name }}"
+  mysql_db: 
+    name: "{{ db_name }}" 
+    state: present 
+  when: db_name is defined
+  delegate_to: "{{ mysql_host }}"
+  register: mysql_created_db 
