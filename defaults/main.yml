@@ -11,3 +11,8 @@ mysql_innodb_log_buffer_size: 32M
 mysql_max_allowed_packet: 64M
 mysql_max_connections: 500
 
+# Zabbix templates/groups (monitoring)
+zabbix_mysql_templates:
+  - Template CentOS MySQL
+zabbix_mysql_groups:
+  - CentOS MySQL servers
