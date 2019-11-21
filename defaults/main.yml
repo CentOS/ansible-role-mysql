@@ -3,13 +3,15 @@
 mysql_root_pass: changeme123
 
 # defaulting to innodb 
-# Worth noting that innodb_log_file_size is hardcoded to 512M, 
-# as changing that value and restarting mysqld/mariadb doesn't work
 mysql_innodb_host: True
 mysql_innodb_buffer_pool_size: 1024M
 mysql_innodb_log_buffer_size: 32M
 mysql_max_allowed_packet: 64M
 mysql_max_connections: 500
+# Worth noting that innodb_log_file_size is hardcoded to 512M with default value
+# Changing that value and restarting mysqld/mariadb doesn't work so only overwrite it 
+# when migrating existing nodes to ansible and with other default settings (5M when not defined)
+mysql_innodb_log_file_size: 512M
 
 # Zabbix templates/groups (monitoring)
 zabbix_mysql_templates:
