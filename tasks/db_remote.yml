@@ -14,6 +14,7 @@
     - '%'
   when: db_user is defined
   delegate_to: "{{ mysql_host }}"
+  no_log: True
 
 - name: create application database "{{ db_name }}"
   mysql_db: 

@@ -1,12 +1,14 @@
 ---
-
-- name: source the distribution specific vars
+- name: Importing specific distro variables
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
-    - "{{ ansible_os_family }}.yml"
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
 
-- include: "{{ ansible_os_family }}.yml"
+- name: install the MySQL packages
+  yum: 
+    name: "{{ mysql_pkgs_list }}" 
+    state: installed
 
 - name: Configuring server.cnf [mariadb]
   template: 
@@ -34,6 +36,7 @@
     - 127.0.0.1
     - ::1
     - localhost
+  no_log: True
 
 - name: copy a .my.cnf for future operations
   template: 

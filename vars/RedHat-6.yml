@@ -1,8 +1,0 @@
----
-
-mysql_server_pkg: mysql-server
-mysql_client_pkg: mysql
-
-mysql_python_pkg: MySQL-python
-
-mysql_service_name: mysqld

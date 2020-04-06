@@ -1,8 +1,0 @@
----
-
-mysql_server_pkg: mariadb-server
-mysql_client_pkg: mariadb
-
-mysql_python_pkg: MySQL-python
-
-mysql_service_name: mariadb

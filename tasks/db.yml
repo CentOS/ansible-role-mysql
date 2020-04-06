@@ -13,6 +13,7 @@
     - 'localhost'
     - '%'
   when: mysql_db_user is defined
+  no_log: True
 
 - name: create application database "{{ mysql_db_name }}"
   mysql_db: 

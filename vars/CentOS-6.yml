@@ -1,0 +1,8 @@
+---
+
+mysql_pkgs_list: 
+  - mysql-server
+  - mysql
+  - MySQL-python
+
+mysql_service_name: mysqld
