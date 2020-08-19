@@ -16,7 +16,7 @@
     dest: /etc/my.cnf.d/server.cnf 
     owner: root 
     group: root 
-    mode: 644
+    mode: 0644
   when: ansible_distribution_major_version|int >=7
   notify: restart_mysqld
 
