@@ -7,6 +7,7 @@
         password: "{{ db_pass }}" 
         state: present 
         priv: "{{ db_name}}.*:ALL,GRANT"
+        append_privs: True
       with_items:
         - '127.0.0.1'
         - '::1'
