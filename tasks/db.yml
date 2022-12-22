@@ -1,24 +1,35 @@
 ---
 
-- name: create application user "{{ mysql_db_user }}"
-  mysql_user: 
-    host: "{{ item }}" 
-    name: "{{ mysql_db_user }}" 
-    password: "{{ mysql_db_pass }}" 
-    state: present 
-    priv: "{{ mysql_db_name}}.*:ALL,GRANT"
-    append_privs: True
-  with_items:
-    - '127.0.0.1'
-    - '::1'
-    - 'localhost'
-    - '%'
-  when: mysql_db_user is defined
-  no_log: True
-
 - name: create application database "{{ mysql_db_name }}"
   mysql_db: 
     name: "{{ mysql_db_name }}" 
     state: present 
+    encoding: "{{ mysql_db_encoding | default('utf8') }}"
+    collation: "{{ mysql_db_collation | default('utf8_general_ci') }}"
   when: mysql_db_name is defined
   register: mysql_created_db
+
+- name: create application user "{{ mysql_db_user }}"
+  mysql_user: 
+    host: "{{ item }}"
+    name: "{{ mysql_db_user }}"
+    password: "{{ mysql_db_pass }}"
+    state: present 
+  with_items:
+    - 'localhost'
+  when: mysql_db_user is defined
+  no_log: True
+
+- name: Granting rights for application user "{{ mysql_db_user }}"
+  mysql_user: 
+    host: "{{ item }}" 
+    name: "{{ mysql_db_user }}" 
+    state: present 
+    priv: "{{ mysql_db_name}}.*:ALL,GRANT"
+    append_privs: False
+  with_items:
+    - 'localhost'
+  when: mysql_db_user is defined
+  no_log: True
+
+

@@ -13,6 +13,17 @@ mysql_max_connections: 500
 # when migrating existing nodes to ansible and with other default settings (5M when not defined)
 mysql_innodb_log_file_size: 512M
 
+# We also support creating automatically databases and users access
+# See db.yml or db-remote.yml tasks
+# These are imported through other roles that needs a local or remote mysql db/access
+# both supports :
+#   db_name
+#   db_user
+#   db_password
+#   db_encoding (default to 'utf8' if undefined)
+#   db_collation (default to 'utf8_general_ci' if undefined)
+
+
 # Zabbix templates/groups (monitoring)
 zabbix_mysql_templates:
   - Template CentOS MySQL

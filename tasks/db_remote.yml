@@ -9,9 +9,6 @@
         priv: "{{ db_name}}.*:ALL,GRANT"
         append_privs: True
       with_items:
-        - '127.0.0.1'
-        - '::1'
-        - 'localhost'
         - '%'
       when: db_user is defined
       no_log: True
@@ -20,6 +17,8 @@
       mysql_db: 
         name: "{{ db_name }}" 
         state: present 
+        encoding: "{{ db_encoding | default('utf8') }}"             
+        collation: "{{db_collation | default('utf8_general_ci') }}"        
       register: mysql_created_db 
       when: db_name is defined
   delegate_to: "{{ mysql_host }}"
