@@ -16,10 +16,14 @@ innodb_file_per_table
 innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
 innodb_log_file_size = {{ mysql_innodb_log_file_size }}
 innodb_log_buffer_size = {{ mysql_innodb_log_buffer_size }}
+innodb_write_io_threads = {{ mysql_innodb_write_io_threads }}
 max_allowed_packet = {{ mysql_max_allowed_packet }}
 max_connections = {{ mysql_max_connections }}
 innodb_flush_method=O_DIRECT
 innodb_flush_log_at_trx_commit=2
+{% endif %}
+{% if ansible_distribution_major_version == '8' and mysql_disable_log_bin %} 
+disable_log_bin
 {% endif %}
 
 # this is only for embedded server

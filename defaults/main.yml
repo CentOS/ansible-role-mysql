@@ -6,12 +6,22 @@ mysql_root_pass: changeme123
 mysql_innodb_host: True
 mysql_innodb_buffer_pool_size: 1024M
 mysql_innodb_log_buffer_size: 32M
+mysql_innodb_write_io_threads: "{{ ansible_processor_vcpus * 2 }}"
+
+# Other settings
+#
 mysql_max_allowed_packet: 64M
 mysql_max_connections: 500
+
 # Worth noting that innodb_log_file_size is hardcoded to 512M with default value
 # Changing that value and restarting mysqld/mariadb doesn't work so only overwrite it 
 # when migrating existing nodes to ansible and with other default settings (5M when not defined)
 mysql_innodb_log_file_size: 512M
+
+# Starting from mysql 8 binary logging is enabled by default
+# You can disable it (no need on a standalone node)
+mysql_disable_log_bin: False
+
 
 # We also support creating automatically databases and users access
 # See db.yml or db-remote.yml tasks
