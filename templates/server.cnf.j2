@@ -22,7 +22,7 @@ max_connections = {{ mysql_max_connections }}
 innodb_flush_method=O_DIRECT
 innodb_flush_log_at_trx_commit=2
 {% endif %}
-{% if ansible_distribution_major_version == '8' and mysql_disable_log_bin %} 
+{% if ansible_distribution_major_version|int > 7 and mysql_disable_log_bin %} 
 disable_log_bin
 {% endif %}
 

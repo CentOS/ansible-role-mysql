@@ -20,7 +20,7 @@ mysql_innodb_log_file_size: 512M
 
 # Starting from mysql 8 binary logging is enabled by default
 # You can disable it (no need on a standalone node)
-mysql_disable_log_bin: False
+mysql_disable_log_bin: True
 
 
 # We also support creating automatically databases and users access
