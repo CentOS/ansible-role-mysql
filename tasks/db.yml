@@ -11,24 +11,18 @@
 
 - name: create application user "{{ mysql_db_user }}"
   mysql_user: 
-    host: "{{ item }}"
     name: "{{ mysql_db_user }}"
     password: "{{ mysql_db_pass }}"
     state: present 
-  with_items:
-    - 'localhost'
   when: mysql_db_user is defined
   no_log: True
 
 - name: Granting rights for application user "{{ mysql_db_user }}"
   mysql_user: 
-    host: "{{ item }}" 
     name: "{{ mysql_db_user }}" 
     state: present 
     priv: "{{ mysql_db_name}}.*:ALL,GRANT"
-    append_privs: False
-  with_items:
-    - 'localhost'
+    append_privs: True
   when: mysql_db_user is defined
   no_log: True
 
